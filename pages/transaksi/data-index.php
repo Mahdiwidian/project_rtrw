@@ -1,6 +1,15 @@
 <?php
 include('../../config/koneksi.php');
 
+$query_trans = "SELECT * FROM transaksi";
+$query_filter = "SELECT * FROM transaksi WHERE type = 'pemasukan'";
+$hasil_trans = mysqli_query($db, $query_filter);
+$data_trans = array();
+
+while ($row = mysqli_fetch_assoc($hasil_trans)) {
+  $data_trans[] = $row;
+}
+
 // hitung warga
 $query_warga = "SELECT COUNT(*) AS total FROM warga";
 $hasil_warga = mysqli_query($db, $query_warga);
