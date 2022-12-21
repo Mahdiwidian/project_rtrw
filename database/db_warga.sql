@@ -1,26 +1,39 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
--- http://www.phpmyadmin.net
+-- version 5.0.1
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 19, 2020 at 08:59 PM
--- Server version: 5.5.32
--- PHP Version: 5.4.19
+-- Generation Time: Dec 20, 2022 at 03:18 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.2.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `db_warga`
 --
-CREATE DATABASE IF NOT EXISTS `db_warga` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `db_warga`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event`
+--
+
+CREATE TABLE `event` (
+  `id` int(30) NOT NULL,
+  `judul` int(30) NOT NULL,
+  `konten` varchar(50) NOT NULL,
+  `jenis` enum('Berita','Kegiatan') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -28,24 +41,31 @@ USE `db_warga`;
 -- Table structure for table `galeri`
 --
 
-CREATE TABLE IF NOT EXISTS `galeri` (
-  `id_galeri` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `galeri` (
+  `id_galeri` int(11) NOT NULL,
   `path_galeri` varchar(100) NOT NULL,
   `caption_galeri` text NOT NULL,
   `tautan_galeri` varchar(100) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id_galeri`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `galeri`
+-- Table structure for table `iuran`
 --
 
-INSERT INTO `galeri` (`id_galeri`, `path_galeri`, `caption_galeri`, `tautan_galeri`, `id_user`, `created_at`, `updated_at`) VALUES
-(1, 'b4a608a2860440739253d1cbc7c1b447.jpg', 'Kegiatan sosialisasi', 'https://youtu.be/1CGWg_Syj2g', 9, '2020-10-19 18:45:48', '0000-00-00 00:00:00');
+CREATE TABLE `iuran` (
+  `id` int(11) NOT NULL,
+  `Keterangan` int(11) NOT NULL,
+  `Pemasukan` int(11) NOT NULL,
+  `Pengeluaran` int(11) NOT NULL,
+  `rt` int(11) NOT NULL,
+  `rw` int(11) NOT NULL,
+  `kecamatan` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -53,8 +73,8 @@ INSERT INTO `galeri` (`id_galeri`, `path_galeri`, `caption_galeri`, `tautan_gale
 -- Table structure for table `kartu_keluarga`
 --
 
-CREATE TABLE IF NOT EXISTS `kartu_keluarga` (
-  `id_keluarga` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `kartu_keluarga` (
+  `id_keluarga` int(11) NOT NULL,
   `nomor_keluarga` varchar(16) NOT NULL,
   `id_kepala_keluarga` int(11) NOT NULL,
   `alamat_keluarga` text NOT NULL,
@@ -67,12 +87,9 @@ CREATE TABLE IF NOT EXISTS `kartu_keluarga` (
   `rw_keluarga` varchar(3) NOT NULL,
   `kode_pos_keluarga` varchar(5) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id_keluarga`),
-  KEY `id_kepala_keluarga` (`id_kepala_keluarga`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kartu_keluarga`
@@ -87,8 +104,8 @@ INSERT INTO `kartu_keluarga` (`id_keluarga`, `nomor_keluarga`, `id_kepala_keluar
 -- Table structure for table `mutasi`
 --
 
-CREATE TABLE IF NOT EXISTS `mutasi` (
-  `id_mutasi` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `mutasi` (
+  `id_mutasi` int(11) NOT NULL,
   `nik_mutasi` varchar(16) NOT NULL,
   `nama_mutasi` varchar(45) NOT NULL,
   `tempat_lahir_mutasi` varchar(30) NOT NULL,
@@ -109,11 +126,31 @@ CREATE TABLE IF NOT EXISTS `mutasi` (
   `status_perkawinan_mutasi` enum('Kawin','Tidak Kawin') NOT NULL,
   `status_mutasi` enum('Tetap','Kontrak') NOT NULL,
   `id_user` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id_mutasi`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaksi`
+--
+
+CREATE TABLE `transaksi` (
+  `id` int(11) NOT NULL,
+  `type` varchar(11) NOT NULL,
+  `nominal` bigint(11) NOT NULL,
+  `description` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `transaksi`
+--
+
+INSERT INTO `transaksi` (`id`, `type`, `nominal`, `description`) VALUES
+(1, 'pemasukan', 20000, 'uang iuran sampah'),
+(2, 'pengeluaran', 10000, 'peralatan tulis'),
+(3, 'pemasukan', 20000, 'iuran perbulan');
 
 -- --------------------------------------------------------
 
@@ -121,8 +158,8 @@ CREATE TABLE IF NOT EXISTS `mutasi` (
 -- Table structure for table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
-  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `user` (
+  `id_user` int(11) NOT NULL,
   `nama_user` varchar(45) NOT NULL,
   `username_user` varchar(20) NOT NULL,
   `password_user` varchar(32) NOT NULL,
@@ -135,19 +172,19 @@ CREATE TABLE IF NOT EXISTS `user` (
   `negara_user` varchar(30) NOT NULL,
   `rt_user` varchar(3) NOT NULL,
   `rw_user` varchar(3) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `nama_user`, `username_user`, `password_user`, `keterangan_user`, `status_user`, `desa_kelurahan_user`, `kecamatan_user`, `kabupaten_kota_user`, `provinsi_user`, `negara_user`, `rt_user`, `rw_user`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Admin Desa', 'Admin', 'Negara Bumi', 'Sungkai Tengah', 'Lampug Utara', 'Lampung', 'Indonesia', '001', '002', '2020-10-19 18:44:25', '2020-10-19 18:44:25'),
+(1, 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Admin Desa', 'Admin', 'Negara Bumi', 'Sungkai Tengah', 'Lampug Utara', 'Lampung', 'Indonesia', '001', '002', '2022-12-18 06:10:06', '2020-10-19 18:44:25'),
 (9, 'Agus Yulianto', 'RT04', '52df0981b57418a55d7e239f2244a3f4', 'KETUA RT04', 'RT', 'NEGARA BUMI', 'SUNGKAI TENGAH', 'LAMPUNG UTARA', 'LAMPUNG', 'Indonesia', '003', '016', '2020-10-19 18:42:27', '2020-10-19 18:42:27'),
-(10, 'Sahbudin', 'RW01', '6516c1a3ce2fd473f6d53ff189da8664', 'KETUA RW 01', 'RW', 'DESA NEGARA BUMI', 'SUNGKAI TENGAH', 'LAMPUNG UTARA', 'LAMPUNG', 'Indonesia', '003', '016', '2020-10-19 18:54:06', '2020-10-19 18:54:06');
+(10, 'Sahbudin', 'RW01', '6516c1a3ce2fd473f6d53ff189da8664', 'KETUA RW 01', 'RW', 'DESA NEGARA BUMI', 'SUNGKAI TENGAH', 'LAMPUNG UTARA', 'LAMPUNG', 'Indonesia', '003', '016', '2020-10-19 18:54:06', '2020-10-19 18:54:06'),
+(12, 'Fikri', 'fikriPermana', '25f9e794323b453885f5181f1b624d0b', 'Warga Sipil', 'RT', 'Teluk Pucung', 'Bekasi Utara', 'Bekasi', 'Jawa Barat', 'Indonesia', '003', '016', '2022-11-15 13:23:42', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -155,8 +192,8 @@ INSERT INTO `user` (`id_user`, `nama_user`, `username_user`, `password_user`, `k
 -- Table structure for table `warga`
 --
 
-CREATE TABLE IF NOT EXISTS `warga` (
-  `id_warga` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `warga` (
+  `id_warga` int(11) NOT NULL,
   `nik_warga` varchar(16) NOT NULL,
   `nama_warga` varchar(45) NOT NULL,
   `tempat_lahir_warga` varchar(30) NOT NULL,
@@ -177,11 +214,9 @@ CREATE TABLE IF NOT EXISTS `warga` (
   `status_perkawinan_warga` enum('Kawin','Tidak Kawin') NOT NULL,
   `status_warga` enum('Tetap','Kontrak') NOT NULL,
   `id_user` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id_warga`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `warga`
@@ -196,12 +231,114 @@ INSERT INTO `warga` (`id_warga`, `nik_warga`, `nama_warga`, `tempat_lahir_warga`
 -- Table structure for table `warga_has_kartu_keluarga`
 --
 
-CREATE TABLE IF NOT EXISTS `warga_has_kartu_keluarga` (
+CREATE TABLE `warga_has_kartu_keluarga` (
   `id_warga` int(11) NOT NULL,
-  `id_keluarga` int(11) NOT NULL,
-  KEY `id_penduduk` (`id_warga`,`id_keluarga`),
-  KEY `warga_has_kartu_keluarga_ibfk_2` (`id_keluarga`)
+  `id_keluarga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `galeri`
+--
+ALTER TABLE `galeri`
+  ADD PRIMARY KEY (`id_galeri`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `iuran`
+--
+ALTER TABLE `iuran`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `kartu_keluarga`
+--
+ALTER TABLE `kartu_keluarga`
+  ADD PRIMARY KEY (`id_keluarga`),
+  ADD KEY `id_kepala_keluarga` (`id_kepala_keluarga`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `mutasi`
+--
+ALTER TABLE `mutasi`
+  ADD PRIMARY KEY (`id_mutasi`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_user`);
+
+--
+-- Indexes for table `warga`
+--
+ALTER TABLE `warga`
+  ADD PRIMARY KEY (`id_warga`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `warga_has_kartu_keluarga`
+--
+ALTER TABLE `warga_has_kartu_keluarga`
+  ADD KEY `id_penduduk` (`id_warga`,`id_keluarga`),
+  ADD KEY `warga_has_kartu_keluarga_ibfk_2` (`id_keluarga`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `galeri`
+--
+ALTER TABLE `galeri`
+  MODIFY `id_galeri` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `iuran`
+--
+ALTER TABLE `iuran`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `kartu_keluarga`
+--
+ALTER TABLE `kartu_keluarga`
+  MODIFY `id_keluarga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `mutasi`
+--
+ALTER TABLE `mutasi`
+  MODIFY `id_mutasi` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `transaksi`
+--
+ALTER TABLE `transaksi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `warga`
+--
+ALTER TABLE `warga`
+  MODIFY `id_warga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -238,6 +375,7 @@ ALTER TABLE `warga`
 ALTER TABLE `warga_has_kartu_keluarga`
   ADD CONSTRAINT `warga_has_kartu_keluarga_ibfk_1` FOREIGN KEY (`id_warga`) REFERENCES `warga` (`id_warga`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `warga_has_kartu_keluarga_ibfk_2` FOREIGN KEY (`id_keluarga`) REFERENCES `kartu_keluarga` (`id_keluarga`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
