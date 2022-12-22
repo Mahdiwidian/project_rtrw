@@ -2,12 +2,12 @@
 include('../../config/koneksi.php');
 
 // ambil dari database
-$query = "SELECT * FROM galeri";
+$query = "SELECT * FROM kegiatan";
 
 $hasil = mysqli_query($db, $query);
 
-$data_galeri = array();
+$data_kegiatan = array();
 
 while ($row = mysqli_fetch_assoc($hasil)) {
-  $data_galeri[] = $row;
+  $data_kegiatan[] = $row;
 }

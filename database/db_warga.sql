@@ -236,6 +236,33 @@ CREATE TABLE `warga_has_kartu_keluarga` (
   `id_keluarga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kegiatan`
+--
+
+CREATE TABLE IF NOT EXISTS `kegiatan` (
+  `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT,
+  `path_kegiatan` varchar(100) NOT NULL,
+  `caption_kegiatan` text NOT NULL,
+  `tautan_kegiatan` varchar(100) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id_kegiatan`),
+  KEY `id_user` (`id_user`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `kegiatan`
+--
+
+INSERT INTO `kegiatan` (`id_kegiatan`, `path_kegiatan`, `caption_kegiatan`, `tautan_kegiatan`, `id_user`, `created_at`, `updated_at`) VALUES
+(1, 'b4a608a2860440739253d1cbc7c1b447.jpg', 'Kegiatan Dinas di Rumah Bupati', 'https://youtu.be/123456', 9, '2022-12-21 18:45:48', '2022-12-21 18:45:48');
+
+-- --------------------------------------------------------
+
 --
 -- Indexes for dumped tables
 --
@@ -375,6 +402,12 @@ ALTER TABLE `warga`
 ALTER TABLE `warga_has_kartu_keluarga`
   ADD CONSTRAINT `warga_has_kartu_keluarga_ibfk_1` FOREIGN KEY (`id_warga`) REFERENCES `warga` (`id_warga`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `warga_has_kartu_keluarga_ibfk_2` FOREIGN KEY (`id_keluarga`) REFERENCES `kartu_keluarga` (`id_keluarga`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `kegiatan`
+--
+ALTER TABLE `kegiatan`
+  ADD CONSTRAINT `kegiatan_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
