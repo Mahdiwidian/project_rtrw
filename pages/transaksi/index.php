@@ -5,12 +5,12 @@
 <?php include('data-index.php') ?>
 
 <div style="margin: 26px;">
-  <form method="POST" name="filterForm" id="filterForm" action="transaksi/data-index.php">
-    <select onchange="filter(this.value)" id='typeDropdown' style="margin-right: 34px;width: 150px;">
+  <form>
+    <select onchange="filter()" id="filterType" style="margin-right: 34px;width: 150px;">
       <option value="all" selected>All</option>
       <option value="income">Pemasukan</option>
       <option value="outcome">Pengeluaran</option>
-    </select><input type="date" onchange="filterDate(this.date)" style="width: 150px;margin-bottom: 16px;" />
+    </select><input type="date" onchange="filter()" id="filterDate" value="<?php echo date('Y-m-d'); ?>" style="width: 150px;margin-bottom: 16px;" />
     <div id="showData">
       <?php foreach ($data_trans as $trans) : ?>
         <div class="panel panel-primary" style="margin-bottom: 8px;">
@@ -39,55 +39,50 @@
   });
 </script> -->
 <script>
-  function filter(item) {
+  function filter() {
+    var filterData = {
+      type: $("#filterType").val(),
+      date: $("#filterDate").val(),
+    };
+
     $.ajax({
       type: "POST",
-      url: "transaksi/data-index.php",
+      url: "transaksi/filter-index.php",
       dataType: "JSON",
-      data: {
-        value: item
-      },
+      data: filterData,
+      dataType: "json",
       success: function(data) {
-        // console.log(data);
         var html = '';
-        var i;
-        var valueMoney, classColor;
-        for (i = 0; i < data.length; i++) {
-          if (data[i].type == 'pemasukan') {
-            valueMoney = data[i].nominal
-            classColor = 'color: rgb(55,211,41)'
-          } else {
-            valueMoney = '-' + data[i].nominal
-            classColor = 'color: rgb(203,58,49)'
-          }
+        var i, valueMoney, classColor;
 
-          html += '<div class="panel panel-primary" style="margin-bottom: 8px;">' +
-            '<div class="panel-body">' +
-            '<div style="display: flex; justify-content: space-between;">' +
-            '<h4>Rp ' + valueMoney + '</h4>' +
-            '<span style="' + classColor + '">' + data[i].type + '</span>' +
-            '</div>' +
-            '<p class="panel-text">' + data[i].description + '</p>' +
-            '</div>' +
-            '</div>';
+        if (data.length <= 0) {
+          html += '<p>No Data Found</p>';
+        } else {
+          for (i = 0; i < data.length; i++) {
+            if (data[i].type == 'pemasukan') {
+              valueMoney = data[i].nominal
+              classColor = 'color: rgb(55,211,41)'
+            } else {
+              valueMoney = '-' + data[i].nominal
+              classColor = 'color: rgb(203,58,49)'
+            }
+
+            html += '<div class="panel panel-primary" style="margin-bottom: 8px;">' +
+              '<div class="panel-body">' +
+              '<div style="display: flex; justify-content: space-between;">' +
+              '<h4>Rp ' + valueMoney + '</h4>' +
+              '<span style="' + classColor + '">' + data[i].type + '</span>' +
+              '</div>' +
+              '<p class="panel-text">' + data[i].description + '</p>' +
+              '</div>' +
+              '</div>';
+          }
         }
+
         $('#showData').html(html);
       }
     });
   }
-
-  // function filterDate(item) {
-  //   $.ajax({
-  //     type: "POST",
-  //     url: "transaksi/data-index.php",
-  //     data: {
-  //       date: date
-  //     },
-  //     success: function(data) {
-  //       console.log(data);
-  //     }
-  //   });
-  // }
 </script>
 
 <?php include('../_partials/bottom.php') ?>

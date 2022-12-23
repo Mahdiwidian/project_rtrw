@@ -140,7 +140,10 @@ CREATE TABLE `transaksi` (
   `id` int(11) NOT NULL,
   `type` varchar(11) NOT NULL,
   `nominal` bigint(11) NOT NULL,
-  `description` varchar(250) NOT NULL
+  `description` varchar(250) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `delete_at` timestamp NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
