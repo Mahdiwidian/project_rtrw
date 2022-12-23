@@ -42,7 +42,7 @@
   function filter(item) {
     $.ajax({
       type: "POST",
-      url: "transaksi/data-index.php",
+      url: "/project_rtrw/pages/transaksi/filtered-data.php",
       dataType: "JSON",
       data: {
         value: item
