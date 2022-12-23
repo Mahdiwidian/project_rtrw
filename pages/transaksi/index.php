@@ -47,7 +47,7 @@
 
     $.ajax({
       type: "POST",
-      url: "transaksi/filter-index.php",
+      url: "/project_rtrw/pages/transaksi/filtered-data.php",
       dataType: "JSON",
       data: filterData,
       dataType: "json",
