@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 20, 2022 at 03:18 AM
+-- Generation Time: Dec 24, 2022 at 11:48 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.28
 
@@ -101,6 +101,29 @@ INSERT INTO `kartu_keluarga` (`id_keluarga`, `nomor_keluarga`, `id_kepala_keluar
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `kegiatan`
+--
+
+CREATE TABLE `kegiatan` (
+  `id_kegiatan` int(11) NOT NULL,
+  `path_kegiatan` varchar(100) NOT NULL,
+  `caption_kegiatan` text NOT NULL,
+  `tautan_kegiatan` varchar(100) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kegiatan`
+--
+
+INSERT INTO `kegiatan` (`id_kegiatan`, `path_kegiatan`, `caption_kegiatan`, `tautan_kegiatan`, `id_user`, `created_at`, `updated_at`) VALUES
+(1, 'b4a608a2860440739253d1cbc7c1b447.jpg', 'Kegiatan Dinas di Rumah Bupati', 'https://youtu.be/123456', 9, '2022-12-21 18:45:48', '2022-12-21 18:45:48');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `mutasi`
 --
 
@@ -141,19 +164,29 @@ CREATE TABLE `transaksi` (
   `type` varchar(11) NOT NULL,
   `nominal` bigint(11) NOT NULL,
   `description` varchar(250) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `transaction_date` datetime NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `delete_at` timestamp NULL
+  `delete_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `transaksi`
 --
 
-INSERT INTO `transaksi` (`id`, `type`, `nominal`, `description`) VALUES
-(1, 'pemasukan', 20000, 'uang iuran sampah'),
-(2, 'pengeluaran', 10000, 'peralatan tulis'),
-(3, 'pemasukan', 20000, 'iuran perbulan');
+INSERT INTO `transaksi` (`id`, `type`, `nominal`, `description`, `id_user`, `transaction_date`, `created_at`, `updated_at`, `delete_at`) VALUES
+(1, 'pemasukan', 20000, 'uang iuran sampah', 0, '2022-12-24 00:00:00', '2022-12-23 20:10:11', '2022-12-24 02:47:31', NULL),
+(2, 'pengeluaran', 10000, 'peralatan tulis', 0, '2022-12-24 00:00:00', '2022-12-23 20:10:11', '2022-12-24 02:47:27', NULL),
+(3, 'pemasukan', 20000, 'iuran perbulan', 0, '2022-12-24 00:00:00', '2022-12-23 20:10:11', '2022-12-24 02:47:26', NULL),
+(4, 'pemasukan', 20000, 'iuran perbulan', 0, '2022-12-24 00:00:00', '2022-12-24 20:10:11', '2022-12-24 02:47:23', NULL),
+(5, 'pemasukan', 2000, 'test', 1, '2022-12-24 00:00:00', '2022-12-24 01:10:52', '2022-12-24 02:47:21', NULL),
+(6, 'pemasukan', 5000, 'test2', 1, '2022-12-24 00:00:00', '2022-12-24 01:12:33', '2022-12-24 02:47:19', NULL),
+(7, 'pengeluaran', 5000, 'test baruu banget', 1, '2022-12-24 00:00:00', '2022-12-24 02:19:25', '2022-12-24 02:47:17', NULL),
+(8, 'pengeluaran', 60000, 'testing baru', 1, '2022-12-24 00:00:00', '2022-12-24 02:20:24', '2022-12-24 02:47:15', NULL),
+(9, 'pengeluaran', 50000, 'testing baru banget', 1, '2022-12-24 00:00:00', '2022-12-24 02:20:45', '2022-12-24 02:46:58', NULL),
+(14, 'pemasukan', 2020000, 'test', 1, '2022-12-24 00:00:00', '2022-12-24 02:45:01', '2022-12-24 02:47:11', NULL),
+(15, 'pemasukan', 2020000, 'test', 1, '2022-12-24 09:45:44', '2022-12-24 02:45:44', '2022-12-24 02:48:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -239,33 +272,6 @@ CREATE TABLE `warga_has_kartu_keluarga` (
   `id_keluarga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `kegiatan`
---
-
-CREATE TABLE IF NOT EXISTS `kegiatan` (
-  `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT,
-  `path_kegiatan` varchar(100) NOT NULL,
-  `caption_kegiatan` text NOT NULL,
-  `tautan_kegiatan` varchar(100) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id_kegiatan`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `kegiatan`
---
-
-INSERT INTO `kegiatan` (`id_kegiatan`, `path_kegiatan`, `caption_kegiatan`, `tautan_kegiatan`, `id_user`, `created_at`, `updated_at`) VALUES
-(1, 'b4a608a2860440739253d1cbc7c1b447.jpg', 'Kegiatan Dinas di Rumah Bupati', 'https://youtu.be/123456', 9, '2022-12-21 18:45:48', '2022-12-21 18:45:48');
-
--- --------------------------------------------------------
-
 --
 -- Indexes for dumped tables
 --
@@ -289,6 +295,13 @@ ALTER TABLE `iuran`
 ALTER TABLE `kartu_keluarga`
   ADD PRIMARY KEY (`id_keluarga`),
   ADD KEY `id_kepala_keluarga` (`id_kepala_keluarga`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `kegiatan`
+--
+ALTER TABLE `kegiatan`
+  ADD PRIMARY KEY (`id_kegiatan`),
   ADD KEY `id_user` (`id_user`);
 
 --
@@ -347,6 +360,12 @@ ALTER TABLE `kartu_keluarga`
   MODIFY `id_keluarga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `kegiatan`
+--
+ALTER TABLE `kegiatan`
+  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `mutasi`
 --
 ALTER TABLE `mutasi`
@@ -356,7 +375,7 @@ ALTER TABLE `mutasi`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -388,6 +407,12 @@ ALTER TABLE `kartu_keluarga`
   ADD CONSTRAINT `kartu_keluarga_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
 
 --
+-- Constraints for table `kegiatan`
+--
+ALTER TABLE `kegiatan`
+  ADD CONSTRAINT `kegiatan_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
+
+--
 -- Constraints for table `mutasi`
 --
 ALTER TABLE `mutasi`
@@ -405,12 +430,6 @@ ALTER TABLE `warga`
 ALTER TABLE `warga_has_kartu_keluarga`
   ADD CONSTRAINT `warga_has_kartu_keluarga_ibfk_1` FOREIGN KEY (`id_warga`) REFERENCES `warga` (`id_warga`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `warga_has_kartu_keluarga_ibfk_2` FOREIGN KEY (`id_keluarga`) REFERENCES `kartu_keluarga` (`id_keluarga`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `kegiatan`
---
-ALTER TABLE `kegiatan`
-  ADD CONSTRAINT `kegiatan_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
