@@ -86,9 +86,6 @@
       }
     });
   }
-
-  
-
 </script>
 
 <?php include('../_partials/bottom.php') ?>
