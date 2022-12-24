@@ -3,8 +3,14 @@ include('../../config/koneksi.php');
 
 $date = date('Y-m-d');
 $query_trans = "SELECT * FROM transaksi WHERE date(created_at)='$date'";
+$query_total = "SELECT SUM(nominal) as 'Total' FROM `transaksi` WHERE type = 'pemasukan'";
+$query_total = "SELECT SUM(nominal) as 'Total' FROM `transaksi` WHERE type = 'pengeluaran'";
 
 $hasil_trans = mysqli_query($db, $query_trans);
+$hasil_nominal_trans = mysqli_query($db, $query_total);
+$hasil_nominal_pengeluaran_trans = mysqli_query($db, $query_total);
+$data_nominal_trans = mysqli_fetch_assoc($hasil_nominal_trans);
+$data_nominal_pengeluaran_trans = mysqli_fetch_assoc($hasil_nominal_pengeluaran_trans);
 $data_trans = array();
 
 while ($row = mysqli_fetch_assoc($hasil_trans)) {

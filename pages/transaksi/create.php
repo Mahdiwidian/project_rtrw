@@ -17,6 +17,11 @@
     </td>
   </tr>
   <tr>
+    <th width="20%">Tanggal Transaksi</th>
+    <td width="1%">:</td>
+    <td><input type="datetime-local" class="form-control" name="transaction_date" required></td>
+  </tr>
+  <tr>
     <th width="20%">Nominal</th>
     <td width="1%">:</td>
     <td><input type="text" class="form-control" name="nominal" required></td>
