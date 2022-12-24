@@ -10,44 +10,36 @@
       <option value="all" selected>All</option>
       <option value="income">Pemasukan</option>
       <option value="outcome">Pengeluaran</option>
-    </select><input type="date" onchange="filter()" id="filterDate" value="<?php echo date('Y-m-d'); ?>" style="width: 150px;margin-bottom: 16px;" />
-    <div id="showData">
-      <?php foreach ($data_trans as $trans) : ?>
-        <div class="panel panel-primary" style="margin-bottom: 8px;">
-          <div class="panel-body">
-            <div style="display: flex; justify-content: space-between;">
-              <h4>Rp <?php echo $trans['type'] == 'pemasukan' ? '' : '-' ?><?= $trans['nominal'] ?></h4><span style="<?php echo $trans['type'] == 'pemasukan' ? 'color: rgb(55,211,41)' : 'color: rgb(203,58,49)' ?>"><?= $trans['type'] ?></span>
-            </div>
-            <p class="panel-text"><?= $trans['description'] ?></p>
-          </div>
-        </div>
-      <?php endforeach; ?>
-    </div>
+    </select>
+    From: <input type="date" onchange="filter()" id="filterDate" value="<?php echo date('Y-m-d'); ?>" style="width: 150px;margin-bottom: 16px;margin-right: 10px" />
+    End: <input type="date" onchange="filter()" id="filterDate2" value="<?php echo date('Y-m-d'); ?>" style="width: 150px;margin-bottom: 16px;" />
+    <div id="showData"></div>
   </form>
 </div>
 
-<?php if (isset($_POST['typeDropdown'])) var_dump($_POST['typeDropdown']) ?>
+<!-- <?php var_dump($data_trans) ?> -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!-- <script>
-  $('document').ready(function() {
-    $('#typeDropdown').on('change', function() {
-      $('#filterForm').submit(), function(res) {
-        console.log(res)
-      };
-    });
-  });
-</script> -->
 <script>
+  filter();
   function filter() {
+    var host = window.location.pathname;
+
+    $('#filterDate2')[0].min = $('#filterDate').val();
+    if($('#filterDate2').val() < $('#filterDate').val()){
+      console.log('masuk')
+      $('#filterDate2').val($('#filterDate').val());
+    }
+
     var filterData = {
       type: $("#filterType").val(),
       date: $("#filterDate").val(),
+      date2: $("#filterDate2").val(),
     };
 
     $.ajax({
       type: "POST",
-      url: "/project_rtrw/pages/transaksi/filtered-data.php",
+      url: `${host}/filtered-data.php`,
       dataType: "JSON",
       data: filterData,
       dataType: "json",
@@ -58,6 +50,7 @@
         if (data.length <= 0) {
           html += '<p>No Data Found</p>';
         } else {
+          var first = true;
           for (i = 0; i < data.length; i++) {
             if (data[i].type == 'pemasukan') {
               valueMoney = data[i].nominal
@@ -66,8 +59,18 @@
               valueMoney = '-' + data[i].nominal
               classColor = 'color: rgb(203,58,49)'
             }
+            
+            var distinctDate = (data[i+1]?.created_at == data[i].created_at 
+              || data[i-1]?.created_at != data[i].created_at 
+              || data.length <= 1)  && first;
+            if(!distinctDate){
+              first = true;
+            }else {
+              first = false;
+            }
 
-            html += '<div class="panel panel-primary" style="margin-bottom: 8px;">' +
+            html += (distinctDate ? `<p style="font-weight: bold;">${data[i].created_at}</p>` : '') +
+              '<div class="panel panel-primary" style="margin-bottom: 8px;">' +
               '<div class="panel-body">' +
               '<div style="display: flex; justify-content: space-between;">' +
               '<h4>Rp ' + valueMoney + '</h4>' +
@@ -83,6 +86,9 @@
       }
     });
   }
+
+  
+
 </script>
 
 <?php include('../_partials/bottom.php') ?>
