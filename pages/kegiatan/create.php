@@ -1,10 +1,10 @@
 <?php include('../_partials/top.php') ?>
 
-<h1 class="page-header">Galeri</h1>
+<h1 class="page-header">Kegiatan</h1>
 <?php include('_partials/menu.php') ?>
 
 <form action="store.php" method="post" enctype="multipart/form-data">
-<h3>A. Data Pribadi</h3>
+<h3>Data Kegiatan</h3>
 <table class="table table-striped table-middle">
   <tr>
     <th width="20%">Path</th>
@@ -14,12 +14,12 @@
   <tr>
     <th>Caption</th>
     <td>:</td>
-    <td><input type="text" class="form-control" name="caption_galeri" required></td>
+    <td><input type="text" class="form-control" name="caption_kegiatan" required></td>
   </tr>
   <tr>
     <th>Tautan</th>
     <td>:</td>
-    <td><input type="text" class="form-control" name="tautan_galeri"></td>
+    <td><input type="text" class="form-control" name="tautan_kegiatan"></td>
   </tr>
 </table>
 
