@@ -4,7 +4,7 @@
 
 $host = "localhost";
 $user = "root";
-$pass = "sirclosirclo";
+$pass = "";
 $database = "db_warga";
 
 $db = mysqli_connect($host, $user, $pass, $database) or die("gagal koneksi ke database");
