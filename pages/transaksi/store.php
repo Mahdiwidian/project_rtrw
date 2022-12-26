@@ -12,7 +12,6 @@ include('../../config/koneksi.php');
 $type = htmlspecialchars($_POST['type']);
 $nominal = htmlspecialchars($_POST['nominal']);
 $transaction_date = htmlspecialchars($_POST['transaction_date']);
-var_dump($transaction_date);
 $desc = htmlspecialchars($_POST['description']);
 
 $id_user = $_SESSION['user']['id_user'];
