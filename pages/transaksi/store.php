@@ -23,11 +23,11 @@ $query = "INSERT INTO transaksi (`type`, `transaction_date`, `nominal`, `descrip
 $hasil = mysqli_query($db, $query);
 
 // id terakhir
-// mysqli_insert_id($db)
+mysqli_insert_id($db);
 
 // cek keberhasilan pendambahan data
-// if ($hasil == true) {
-//   echo "<script>window.alert('Tambah Transaksi Berhasil'); window.location.href='../transaksi/index.php'</script>";
-// } else {
-//   echo "<script>window.alert('Tambah Transaksi Berhasil'); window.location.href='../transaksi/create.php'</script>";
-// }
+if ($hasil == true) {
+  echo "<script>window.alert('Tambah Transaksi Berhasil'); window.location.href='../transaksi/index.php'</script>";
+} else {
+  echo "<script>window.alert('Tambah Transaksi Berhasil'); window.location.href='../transaksi/create.php'</script>";
+}
