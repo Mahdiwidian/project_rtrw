@@ -19,34 +19,34 @@ if (in_array($file_ext,$allowed_file_types) && ($filesize < 200000))
 {
 	// Ubah nama file
 	$newfilename = md5($file_basename) . $file_ext;
-	if (file_exists("../../assets/upload/" . $newfilename))
-	{
-		// Jika file sudah ada
-		echo "<script>window.alert('File sudah ada!'); window.location.href='../kegiatan/create.php'</script>";
-	}
-	else
-	{
-		move_uploaded_file($_FILES["file"]["tmp_name"], "../../assets/upload/" . $newfilename);
+	// if (file_exists("../../assets/upload/" . $newfilename))
+	// {
+	// 	// Jika file sudah ada
+	// 	echo "<script>window.alert('File sudah ada!'); window.location.href='../kegiatan/create.php'</script>";
+	// }
+	// else
+	// {
+		
+	// }
+	move_uploaded_file($_FILES["file"]["tmp_name"], "../../assets/upload/" . $newfilename);
 
-    // ambil data dari form
-    $path_kegiatan = $newfilename;
-    $caption_kegiatan = htmlspecialchars($_POST['caption_kegiatan']);
-    $tautan_kegiatan = htmlspecialchars($_POST['tautan_kegiatan']);
+	// ambil data dari form
+	$path_kegiatan = $newfilename;
+	$caption_kegiatan = htmlspecialchars($_POST['caption_kegiatan']);
+	$tautan_kegiatan = htmlspecialchars($_POST['tautan_kegiatan']);
 
-    $id_user = $_SESSION['user']['id_user'];
+	$id_user = $_SESSION['user']['id_user'];
 
-    // query
-    $query = "INSERT INTO `kegiatan` (`path_kegiatan`, `caption_kegiatan`, `tautan_kegiatan`, `id_user`, `created_at`) VALUES ('$path_kegiatan', '$caption_kegiatan', '$tautan_kegiatan', '$id_user', CURRENT_TIMESTAMP);";
+	// query
+	$query = "INSERT INTO `kegiatan` (`path_kegiatan`, `caption_kegiatan`, `tautan_kegiatan`, `id_user`, `created_at`) VALUES ('$path_kegiatan', '$caption_kegiatan', '$tautan_kegiatan', '$id_user', CURRENT_TIMESTAMP);";
 
-    $hasil = mysqli_query($db, $query);
+	$hasil = mysqli_query($db, $query);
 
-    // cek keberhasilan pendambahan data
-    if ($hasil == true) {
-      echo "<script>window.alert('Tambah kegiatan berhasil'); window.location.href='../kegiatan'</script>";
-    } else {
-      echo "<script>window.alert('Tambah kegiatan gagal!'); window.location.href='../kegiatan'</script>";
-    }
-
+	// cek keberhasilan pendambahan data
+	if ($hasil == true) {
+	echo "<script>window.alert('Tambah kegiatan berhasil'); window.location.href='../kegiatan'</script>";
+	} else {
+	echo "<script>window.alert('Tambah kegiatan gagal!'); window.location.href='../kegiatan'</script>";
 	}
 }
 elseif (empty($file_basename))

@@ -1,6 +1,6 @@
 <?php include('../_partials/top.php') ?>
 
-<h1 class="page-header">Galeri</h1>
+<h1 class="page-header">Berita</h1>
 <?php include('_partials/menu.php') ?>
 
 <form action="store.php" method="post" enctype="multipart/form-data">

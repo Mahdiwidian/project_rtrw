@@ -22,7 +22,7 @@ exec("rm ../../assets/upload/".$path_galeri);
 
 // cek keberhasilan pendambahan data
 if ($hasil == true) {
-  echo "<script>window.location.href='../galeri'</script>";
+  echo "<script>window.location.href='../berita'</script>";
 } else {
-  echo "<script>window.alert('Foto gagal dihapus!'); window.location.href='../galeri'</script>";
+  echo "<script>window.alert('Foto gagal dihapus!'); window.location.href='../berita'</script>";
 }

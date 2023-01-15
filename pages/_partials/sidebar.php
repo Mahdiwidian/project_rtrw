@@ -30,8 +30,8 @@ function is_active($page) {
 </ul>
 
 <ul class="nav nav-sidebar">
-  <li class="<?php is_active('galeri'); ?>">
-    <a href="../galeri"><i class="glyphicon glyphicon-bell"></i> Galeri</a>
+  <li class="<?php is_active('berita'); ?>">
+    <a href="../berita"><i class="glyphicon glyphicon-bell"></i> Berita</a>
   </li>
   <li class="<?php is_active('kegiatan'); ?>">
     <a href="../kegiatan"><i class="glyphicon glyphicon-bullhorn "></i> Kegiatan</a>
